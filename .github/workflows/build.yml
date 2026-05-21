@@ -2,7 +2,7 @@ name: Build APK
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -11,14 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install Buildozer
+      - name: Install Buildozer dependencies
         run: |
-          python -m pip install --user buildozer
+          sudo apt-get update
+          sudo apt-get install -y python3-pip python3-venv
+          pip3 install --user buildozer
 
       - name: Build APK
         run: |
