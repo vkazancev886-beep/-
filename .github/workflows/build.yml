@@ -9,17 +9,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Install Buildozer dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-pip python3-venv
-          pip3 install --user buildozer
+      - name: 🔍 Debug — показать файлы
+        run: ls -la
 
       - name: Build APK
-        run: |
-          buildozer -v android debug
+        uses: ArtemSBulgakov/buildozer-action@v1
+        with:
+          buildozer_version: latest
+          command: "android debug"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
