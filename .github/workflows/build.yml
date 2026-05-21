@@ -2,7 +2,7 @@ name: Build APK
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -11,18 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Show files (для отладки)
+        run: ls -la
+
+      - name: Build APK with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
         with:
-          python-version: '3.11'
-
-      - name: Install Buildozer
-        run: |
-          python -m pip install --user buildozer
-
-      - name: Build APK
-        run: |
-          buildozer -v android debug
+          buildozer_version: "latest"
+          command: "android debug"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
